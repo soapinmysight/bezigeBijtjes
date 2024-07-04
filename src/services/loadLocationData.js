@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const useLoadingData = () => {
     const [locationData, setLocationData] = useState([]);
-    const API_URL = "https://raw.githubusercontent.com/soapinmysight/bezigeBijtjes/master/src/services/locationData.json?token=GHSAT0AAAAAACRFT4BYAYDGO5DBRVL6KHJUZUGYZHA";
+    const API_URL = "https://raw.githubusercontent.com/soapinmysight/bezigeBijtjes/master/assets/api/locationData.json?token=GHSAT0AAAAAACRFT4BYAYDGO5DBRVL6KHJUZUGYZHA";
 
     useEffect(() => {
         (async () => {
