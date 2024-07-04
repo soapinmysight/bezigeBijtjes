@@ -42,7 +42,7 @@ REACT NATIVE
         -there are different types
         https://reactnavigation.org/docs/getting-started/
 
-    -->	lists in react native
+    -->	listsview in react native
         -could be nice for list view of map
         -issue: listview has a standard size
         -solution: use scrollview, and use safeareaview to limit size of scrollview,

@@ -69,3 +69,10 @@ export default Map;
 //         </MapView>;
 // );
 // }
+
+
+//latitude and longitude can be stored in object for marker
+// LatLng = {
+//     latitude: 37.78825,
+//     longitude: -122.4324,
+// }
