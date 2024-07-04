@@ -8,7 +8,7 @@ const ItemCard = ({ item }) => {
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.description}>{item.shortDescription}</Text>
             <Text style={styles.location}>
-                Location: ({item.location.latitude}, {item.location.longitude})
+                Location: ({item.latitude}, {item.longitude})
             </Text>
         </View>
     );
