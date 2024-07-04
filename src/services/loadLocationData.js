@@ -4,7 +4,7 @@ const useLoadingData = () => {
     // State to hold location data
     const [locationData, setLocationData] = useState([]);
     // Const to hold api url
-    const API_URL = "https://raw.githubusercontent.com/soapinmysight/bezigeBijtjes/master/assets/api/locationData.json?token=GHSAT0AAAAAACRFT4BYJN7T7CDVX53OJPUGZUG2VRA"
+    const API_URL = "https://raw.githubusercontent.com/soapinmysight/bezigeBijtjes/master/assets/api/locationData.json?token=GHSAT0AAAAAACRFT4BY5U4TCFIEK5H4TGKSZUG26MQ"
 
     useEffect(() => {
         (async () => {

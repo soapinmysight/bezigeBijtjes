@@ -4,8 +4,8 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 const ItemCard = ({ item }) => {
     return (
         <View style={styles.card}>
-            <Image source={{ uri: item.logo }} style={styles.logo} />
-            <Text style={styles.title}>{item.title}</Text>
+            <Image source={require('../../../assets/img/logo/park.png')} style={styles.logo}/>
+            <Text style={styles.title}>{item.Title}</Text>
             <Text style={styles.description}>{item.shortDescription}</Text>
             <Text style={styles.location}>
                 Location: ({item.latitude}, {item.longitude})
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     logo: {
-        width: 50,
-        height: 50,
+        height: 10,
+        width: '90%',
         marginBottom: 8,
     },
     title: {
