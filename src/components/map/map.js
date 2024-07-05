@@ -72,16 +72,15 @@ const Map = ({ navigation, tracking }) => {
                     />
                 ))}
 
-                {location && (
-                    <Marker
-                        pinColor={'blue'}
-                        coordinate={{
-                            latitude: location.coords.latitude,
-                            longitude: location.coords.longitude,
-                        }}
-                        title="Your Location"
-                    />
-                )}
+                {location ? <Marker
+                    pinColor={'blue'}
+                    coordinate={{
+                        latitude: location.coords.latitude,
+                        longitude: location.coords.longitude,
+                    }}
+                    title="Your Location"
+                />:null}
+                
             </MapView>
             <View style={styles.container}>
                 <Text style={styles.locText}>{locText}</Text>
