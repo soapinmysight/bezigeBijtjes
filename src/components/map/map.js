@@ -13,9 +13,8 @@ import TrackerIcon from '../../../assets/img/logo/locationTracker.png'
 const Map = ({navigation, tracking}) => {
     const locationData = useLoadingData();
 
-    const [location, setLocation] = useState(null);
-    // let userLatitude = ''
-    // let userLongitude = ''
+    const [location, setLocation] = useState('');
+
     const [errorMsg, setErrorMsg] = useState(null);
 
     //for opening and closing modal with hotspot details
@@ -37,27 +36,26 @@ const Map = ({navigation, tracking}) => {
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
                 return;
-            }
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-            // for loading user coordinates into map
+            } else {
+            await Location.watchPositionAsync({accuracy: Accuracy.Balanced}, (coords) => {
+                setLocation(coords);
+            });
+        }
+    })()
+}, []);
 
 
-        })();
-    }, []);
-
-    let locText = 'Waiting..';
+let locText = 'Waiting..';
     if (errorMsg) {
         locText = errorMsg;
         console.log({errorMsg})
     } else if (location) {
         locText = JSON.stringify(location);
         console.log(location)
-        // userLatitude=(location.latitude);
-        // userLongitude=(location.longitude);
-        // console.log(` this is longitude ${userLongitude} and latitude${userLatitude} `)
     }
-
+    await Location.watchPositionAsync({accuracy: Accuracy.Balanced}, (coords) => {
+        setLocation(coords)
+    });
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <Text>This is the map!</Text>
@@ -92,24 +90,16 @@ const Map = ({navigation, tracking}) => {
                     description={item.shortDescription}
                     />
                 ))}
-                {/*loading user coordinate into map*/}
-                {/*    <Marker*/}
-                {/*        pinColor={'blue'}*/}
-                {/*        coordinate={{*/}
-                {/*            latitude: userLatitude,*/}
-                {/*            longitude: userLongitude,*/}
-                {/*        }}*/}
-                {/*        title="Your Location"*/}
-                {/*        />           /!*loading user coordinate into map*!/*/}
-                {location.map((location, index) => (
-                    <Marker
-                        pinColor={'blue'}
-                        coordinate={{
-                            latitude: location.latitude,
-                            longitude: location.longitude,
-                        }}
-                        title="Your Location"
-                        />))}
+
+
+                {location ? <Marker
+                    pinColor={'blue'}
+                    coordinate={{
+                        latitude: location.coords.latitude,
+                        longitude: location.coords.longitude,
+                    }}
+                    title="Your Location"
+                />:null}
             </MapView>
             <View style={styles.container}>
                 <Text style={styles.locText}>{locText}</Text>
