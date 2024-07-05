@@ -1,33 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Text, SafeAreaView, StyleSheet, View} from 'react-native';
-// import {View, SafeAreaProvider, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, SafeAreaView, StyleSheet, View } from 'react-native';
 import useLoadingData from '../../services/loadLocationData';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import {Marker, AnimatedRegion, Circle } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { Accuracy } from "expo-location";
+import { Accuracy } from 'expo-location';
+import TrackerIcon from '../../../assets/img/logo/locationTracker.png';
 
-
-import TrackerIcon from '../../../assets/img/logo/locationTracker.png'
-// import ItemModal from '../itemModal/itemModal';
-const Map = ({navigation, tracking}) => {
+const Map = ({ navigation, tracking }) => {
     const locationData = useLoadingData();
-
-    const [location, setLocation] = useState('');
-
+    const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-
-    //for opening and closing modal with hotspot details
-    // const [selectedLocation, setSelectedLocation] = useState(null);
-
-    // const openModal = (location) => {
-    //     setSelectedLocation(location);
-    // };
-
-    // const closeModal = () => {
-    //     setSelectedLocation(null);
-    // };
-
 
     // Get location tracking permissions, and subscribe to callback
     useEffect(() => {
@@ -36,47 +19,45 @@ const Map = ({navigation, tracking}) => {
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
                 return;
-            } else {
-            await Location.watchPositionAsync({accuracy: Accuracy.Balanced}, (coords) => {
-                setLocation(coords);
-            });
-        }
-    })()
-}, []);
+            }
 
+            await Location.watchPositionAsync(
+                { accuracy: Accuracy.Balanced },
+                (position) => {
+                    setLocation(position);
+                }
+            );
+        })();
+    }, []);
 
-let locText = 'Waiting..';
+    let locText = 'Waiting..';
     if (errorMsg) {
         locText = errorMsg;
-        console.log({errorMsg})
+        console.log({ errorMsg });
     } else if (location) {
         locText = JSON.stringify(location);
-        console.log(location)
+        console.log(location);
     }
-    await Location.watchPositionAsync({accuracy: Accuracy.Balanced}, (coords) => {
-        setLocation(coords)
-    });
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <Text>This is the map!</Text>
 
-            {/*loading the map*/}
+            {/* Loading the map */}
             <MapView
                 provider={PROVIDER_GOOGLE}
                 style={{ flex: 1 }}
-
                 initialRegion={{
-                    //coordinates of my map (± Rotterdam)
+                    // Coordinates of my map (± Rotterdam)
                     latitude: 51.9244,
                     longitude: 4.462456,
-                    //the size of my map (± Rotterdam)
+                    // The size of my map (± Rotterdam)
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}
-                >
-
-                {/*make a marker for every item in locationData (data from the api)*/}
-                {locationData.map((item, index) => (
+            >
+                {/* Make a marker for every item in locationData (data from the API) */}
+                {locationData.map((item) => (
                     <Marker
                         style={styles.marker}
                         pinColor={'pink'}
@@ -87,19 +68,20 @@ let locText = 'Waiting..';
                             longitude: item.longitude,
                         }}
                         title={item.Title}
-                    description={item.shortDescription}
+                        description={item.shortDescription}
                     />
                 ))}
 
-
-                {location ? <Marker
-                    pinColor={'blue'}
-                    coordinate={{
-                        latitude: location.coords.latitude,
-                        longitude: location.coords.longitude,
-                    }}
-                    title="Your Location"
-                />:null}
+                {location && (
+                    <Marker
+                        pinColor={'blue'}
+                        coordinate={{
+                            latitude: location.coords.latitude,
+                            longitude: location.coords.longitude,
+                        }}
+                        title="Your Location"
+                    />
+                )}
             </MapView>
             <View style={styles.container}>
                 <Text style={styles.locText}>{locText}</Text>
@@ -110,7 +92,7 @@ let locText = 'Waiting..';
 
 const styles = StyleSheet.create({
     marker: {
-width: 16,
+        width: 16,
         height: 16,
         backgroundColor: 'pink',
     },
@@ -118,6 +100,6 @@ width: 16,
         fontSize: 12,
         color: '#666',
     },
-})
+});
 
 export default Map;
