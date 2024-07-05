@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Text, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Text, SafeAreaView, StyleSheet, View, Image} from 'react-native';
 import useLoadingData from '../../services/loadLocationData';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Accuracy } from 'expo-location';
-import TrackerIcon from '../../../assets/img/logo/locationTracker.png';
-
 const Map = ({ navigation, tracking }) => {
+
+    const trackerIcon = require('../../../assets/img/logo/locationTracker.png');
+
+
     const locationData = useLoadingData();
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -18,12 +20,9 @@ const Map = ({ navigation, tracking }) => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
-                return;
             } else {
-            await Location.watchPositionAsync(
-                { accuracy: Accuracy.Balanced },
-                (position) => {
-                    setLocation(position);
+                await Location.watchPositionAsync({accuracy: Accuracy.Balanced}, (coords) => {
+                    setLocation(coords);
                 }
             );
         }})();
@@ -71,14 +70,20 @@ const Map = ({ navigation, tracking }) => {
                     />
                 ))}
 
-                {location ? <Marker
-                    pinColor={'blue'}
-                    coordinate={{
+                {location ? (
+                    <Marker
+                        tappable={true}
+                        title="This is your Location"
+                        coordinate={{
                         latitude: location.coords.latitude,
                         longitude: location.coords.longitude,
                     }}
-                    title="Your Location"
-                />:null}
+
+                    >
+                        <Text title="Your Location"/>
+                        <Image source={trackerIcon} style={styles.trackerIcon} />
+                    </Marker>
+                ) : null}
 
             </MapView>
             <View style={styles.container}>
@@ -90,13 +95,16 @@ const Map = ({ navigation, tracking }) => {
 
 const styles = StyleSheet.create({
     marker: {
-        width: 16,
-        height: 16,
-        backgroundColor: 'pink',
+        width: 40,
+        height: 40,
     },
     locText: {
         fontSize: 12,
         color: '#666',
+    },
+    trackerIcon: {
+        width: 30,
+        height: 30,
     },
 });
 
