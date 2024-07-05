@@ -11,7 +11,6 @@ const List = ({ items }) => {
         <FlatList
             data={items}
             renderItem={renderItem}
-            // keyExtractor={(item) => item.id.toString()} // Unique key for each item
         />
     );
 };

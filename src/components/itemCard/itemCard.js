@@ -6,13 +6,11 @@ const ItemCard = ({ item }) => {
     return (
         // A container for the card
         <View style={styles.card}>
-            {/* Displaying an image */}
+            {/* Displaying the item information */}
             <Image source={require('../../../assets/img/logo/park.png')} style={styles.logo}/>
-            {/* Displaying the title of the item */}
             <Text style={styles.title}>{item.Title}</Text>
-            {/* Displaying the short description of the item */}
+            <Text style={styles.subtitle}>This is a {item.category} in {item.neighbourhood}</Text>
             <Text style={styles.description}>{item.shortDescription}</Text>
-            {/* Displaying the location (latitude and longitude) of the item */}
             <Text style={styles.location}>
                 Location: ({item.latitude}, {item.longitude})
             </Text>
@@ -40,6 +38,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    subtitle: {
+        fontSize: 12,
+        color: '#666',
     },
     description: {
         fontSize: 14,
