@@ -19,15 +19,14 @@ const Map = ({ navigation, tracking }) => {
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
                 return;
-            }
-
+            } else {
             await Location.watchPositionAsync(
                 { accuracy: Accuracy.Balanced },
                 (position) => {
                     setLocation(position);
                 }
             );
-        })();
+        }})();
     }, []);
 
     let locText = 'Waiting..';
@@ -80,7 +79,7 @@ const Map = ({ navigation, tracking }) => {
                     }}
                     title="Your Location"
                 />:null}
-                
+
             </MapView>
             <View style={styles.container}>
                 <Text style={styles.locText}>{locText}</Text>
