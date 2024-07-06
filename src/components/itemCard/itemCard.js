@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, } from 'react-native';
+import favSelect from '../../../assets/img/logo/favSelect.png'
+import fav from '../../../assets/img/logo/fav.png'
 
 // ItemCard creates induvidual card which will be loaded into list. it is given item as a prop
 const ItemCard = ({ item }) => {
@@ -7,7 +9,12 @@ const ItemCard = ({ item }) => {
         // A container for the card
         <View style={styles.card}>
             {/* Displaying the item information */}
+            <View style={styles.logos}>
             <Image source={require('../../../assets/img/logo/park.png')} style={styles.logo}/>
+            <Pressable>
+                <Image source={fav} style={styles.star} />
+            </Pressable>
+            </View>
             <Text style={styles.title}>{item.Title}</Text>
             <Text style={styles.subtitle}>This is a {item.category} in {item.neighbourhood}</Text>
             <Text style={styles.description}>{item.shortDescription}</Text>
@@ -30,10 +37,24 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         elevation: 4,
     },
-    logo: {
-        height: 10,
-        width: '90%',
+    logos: {
+        flexDirection: "row",
+        height: 30,
+        width: '100%',
         marginBottom: 8,
+    },
+    logo: {
+        flex: 1,
+        width: '100%',
+        alignContent: 'space-between',
+        height: 30,
+        marginBottom: 8,
+    },
+    star:{
+        flex: 2,
+        height: 30,
+        width: 30,
+        marginLeft: 10,
     },
     title: {
         fontSize: 18,
@@ -51,6 +72,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#666',
     },
+
 });
 
 export default ItemCard;
