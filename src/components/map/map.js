@@ -41,15 +41,15 @@ const Map = ({ navigation, tracking }) => {
         <SafeAreaView style={{ flex: 1 }}>
             <Text>This is the map!</Text>
 
-            {/* Loading the map */}
+            {/* Loading the mapScreen */}
             <MapView
                 provider={PROVIDER_GOOGLE}
                 style={{ flex: 1 }}
                 initialRegion={{
-                    // Coordinates of my map (± Rotterdam)
+                    // Coordinates of my mapScreen (± Rotterdam)
                     latitude: 51.9244,
                     longitude: 4.462456,
-                    // The size of my map (± Rotterdam)
+                    // The size of my mapScreen (± Rotterdam)
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}

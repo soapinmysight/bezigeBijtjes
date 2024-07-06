@@ -1,6 +1,6 @@
 // import React from 'react';
 // import { View, Text, Image, StyleSheet, Modal, Button } from 'react-native';
-// //modal should be opened when pressing on a marker from map
+// //modal should be opened when pressing on a marker from mapScreen
 // const ItemModal = ({ item, onClose }) => {
 //     if (!item) {
 //         return null;
