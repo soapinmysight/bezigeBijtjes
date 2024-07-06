@@ -11,6 +11,7 @@ const List = ({ items }) => {
         <FlatList
             data={items}
             renderItem={renderItem}
+            keyExtractor={(item) => item.Title} // Use a unique identifier for each item
         />
     );
 };
